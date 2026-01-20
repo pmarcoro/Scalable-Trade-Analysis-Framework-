@@ -25,6 +25,39 @@ II) Processed data is analyzed using a Power BI model.
 
 The model follows a star schema and uses lookup tables to contextualize and filter fact data using a star-schema. 3 fact tables of different granularity allowing for flexible slicing and aggregation. 
 
+## Data
+
+This project is based on international trade data sourced from **UN Comtrade**, the United Nations’ official repository for global merchandise trade statistics. UN Comtrade is one of the most comprehensive and widely used sources of data on international trade flows, providing detailed information by reporting country, partner country, product classification, trade flow, and time period. It is commonly used in economic research, policy analysis, and trade monitoring.
+
+Due to licensing and redistribution restrictions, **raw UN Comtrade data files are not included in this repository**. Users interested in reproducing or extending the analysis must download the original data directly from the UN Comtrade platform, subject to its terms of use.
+
+The data used in this project has been **processed, cleaned, and standardized** using custom Python ETL scripts. In addition to harmonizing column names, data types, and product classifications, the processing pipeline removes duplicated descriptive attributes that are instead maintained in dedicated lookup tables.
+
+
+### Processed Data Schema
+
+After processing, the dataset retains the following standardized columns:
+
+| Column name         | Description |
+|--------------------|-------------|
+| `freqCode`         | Frequency of the data (e.g. annual, monthly) |
+| `year`             | Calendar year of the observation |
+| `period`           | Reporting period within the year |
+| `hs4`              | HS product classification |
+| `reporterCode`     | Numeric code identifying the reporting country or economy |
+| `flowCode`         | Trade flow indicator (e.g. exports or imports) |
+| `partnerCode`      | Numeric code identifying the partner country or economy |
+| `hs_code`          | Full Harmonized System (HS) product code |
+| `aggrLevel`        | Level of product aggregation in the HS classification |
+| `qtyUnitCode`      | Unit of measurement for reported quantities |
+| `qty`              | Reported trade quantity |
+| `cifvalue`         | Trade value on a CIF (Cost, Insurance, and Freight) basis |
+| `fobvalue`         | Trade value on a FOB (Free On Board) basis |
+| `trade_value_usd`  | Standardized trade value expressed in US dollars |
+| `isAggregate`      | Boolean flag indicating whether the record corresponds to an aggregate (e.g. regional or global total) |
+
+This standardized structure ensures consistency across reporting periods and countries, and enables efficient aggregation, filtering, and visualization of global trade flows.
+
 ## Lookup Tables
 
 ### UN Comtrade Lookup Tables
@@ -63,7 +96,6 @@ This fact table focuses on analyzing the **productive specialization** of the ma
 
 ![Process Animation](trade-analysis/gifs/export_estructure.gif)
 
----
 
 ### Regional Analysis
 
@@ -74,7 +106,7 @@ This fact table is intended to analyze **exports and imports** for a selected su
 - The level of intra-industry trade within each subsector.
 
 ![Process Animation](trade-analysis/gifs/regional_focus.gif)
----
+
 
 ### Monthly Data
 
@@ -83,13 +115,27 @@ The monthly fact table allows for the analysis of **seasonality**, the effects o
 ![Process Animation](trade-analysis/gifs/monthly_data.gif)
 
 
----
-
 ## Analysis Workflow
 
 The first step in the analysis is to define the sector of analysis and the HS product instances that compose it. Once the sector has been defined, the custom lookup tables must be updated by establishing a logical hierarchy of categories, subcategories, and product forms, at the user’s discretion.
 
 After defining the sector, the required datasets are downloaded to perform the analysis. All dashboards rely on UN Comtrade data; however, each dashboard operates at a different level of granularity. As a result, three separate fact tables are generated.
+
+### UN Comtrade Data Processing Pipeline
+A set of custom Python scripts is used to transform raw UN Comtrade data into a standardized, reusable data model compatible with Power BI.
+
+Because UN Comtrade CSV files frequently present encoding and parsing issues, JSON is adopted as the canonical raw data format. The data processing pipeline is implemented through two Python scripts:
+
+#### 1. `etl_all`
+This script ingests the raw JSON files, standardizes and renames columns according to the target data schema, and consolidates multiple source files into a single unified dataset. The processed data is then exported to Parquet format, enabling more efficient storage through columnar encoding and compression, and improving downstream performance.
+
+#### 2. `add_other_countries`
+This script is used to support the Export Structure dashboard. Its purpose is to analyze the extent to which total exports are concentrated within a limited set of countries and to improve visual clarity by introducing an aggregated “Other countries” category.
+
+To achieve this, the script computes total exports aggregated across all countries by year, HS classification, and trade flow (exports and imports). These totals are then compared against the aggregated value of the selected regional group. The difference between the global aggregate and the selected region constitutes the “Other countries” category.
+
+To ensure methodological consistency, regional groupings that aggregate multiple countries (such as the European Union) must be excluded, as their inclusion would omit intra-regional trade flows and distort the results.
+
 
 ### Downloading Instructions
 
