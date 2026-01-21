@@ -52,8 +52,7 @@ Its main objectives are to:
 - Analyze how the export composition of the sector has evolved over time.
 - Examine the degree of export concentration by identifying the leading exporting countries, the relative share of the top *N* exporters, and how this concentration changes over time.
 
-![Process Animation](trade-analysis/gifs/export_estructure.gif)
-
+<img src="gifs/Export%20Estructure%20preview.gif" width="600">
 
 ### Regional Analysis
 
@@ -65,7 +64,7 @@ Key analytical use cases include:
 - Assessing the relative importance of main trading partners on both the export and import sides.
 - Measuring the degree of intra-industry trade within each subsector, providing insights into regional value chain integration.
 
-![Process Animation](trade-analysis/gifs/regional_focus.gif)
+<img src="gifs/Region%20Focus%20preview.gif" width="600">
 
 
 ### Monthly Data
@@ -79,7 +78,7 @@ Its applications include:
 - Comparing year-over-year changes for specific periods, broken down by HS product groups.
 - Supporting near-real-time monitoring of trade developments for policy or market analysis.
 
-![Process Animation](trade-analysis/gifs/monthly_data.gif)
+<img src="gifs/Monthly%20data%20preview.gif" width="600">
 
 ## Lookup Tables
 
