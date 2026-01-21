@@ -1,0 +1,162 @@
+HS Code;Category id;Subcategory;Product Form
+7201;101;;
+7202;102;Ferro-alloys;
+7203;102;Ferrous obtained by reduction of iron ore;
+7204;102;Waste and scrap;
+7205;103;;
+7206;104;Ingots;
+7207;104;Semi-finished products;
+7208;104;Flat-rolled (>= 600mm);Hot-rolled
+7209;104;Flat-rolled (>= 600mm);Cold-rolled
+7210;104;Flat-rolled (>= 600mm);Clad, plated or coated
+7211;104;Flat-rolled (<600mm);Not clad, plated or coated
+7212;104;Flat-rolled (<600mm);Clad, plated or coated
+7213;104;Bars, rods, angles or shapes;Hot-rolled , hot drawn or hot-extruded
+7214;104;Bars, rods, angles or shapes;Hot-rolled , hot drawn or hot-extruded
+7215;104;Bars, rods, angles or shapes;Not specified
+7216;104;Bars, rods, angles or shapes;Not specified
+7217;104;Wire;
+7218;105;Ingots;
+7219;105;Flat-rolled (>= 600mm);
+7220;105;Flat-rolled (<600mm);
+7221;105;Hot-rolled;
+7222;105;Bars, rods, angles or shapes;
+7223;105;Wire;
+7224;106;Ingots;
+7225;106;Flat-rolled (>= 600mm);
+7226;106;Flat-rolled (<600mm);
+7227;106;Bars, rods, angles or shapes;
+7228;106;Bars, rods, angles or shapes;
+7229;106;Wire;
+7301;201;"Sheet piling; angles or shapes";
+7302;201;Railway materials;Profiled sections
+7303;202;Tubes, pipes and hollow profiles;Cast iron
+7304;202;Tubes, pipes and hollow profiles;Iron or steel, excl. cast iron
+7305;202;Circular cross-sections (> 406.4 mm);Iron or steel, excl. cast iron
+7306;202;Tubes, pipes and hollow profiles;not seamless, n.e.c. in ch. 73
+7307;202;Tube or pipe fittings;Iron or steel
+7308;202;Plates, angles, tubes, etc.;Prepared for use in structures
+7309;203;Reservoirs and tanks (>300L);
+7310;203;Reservoirs and tanks (<=300L);
+7311;203;For compressed or liquefied gas;
+7312;204;Stranded wire, ropes, cables, etc.;Not electrically insulated
+7313;204;Barbed, twisted or flat wire;
+7314;204;Cloth, grill and fencing;
+7315;205;;
+7316;206;Anchors and grapnels;
+7317;207;Nails and pins;
+7318;207;Bolts, screws, rivets, etc.;
+7319;207;Sewing articles and safety pins ;
+7320;207;Springs;
+7321;208;Domestic appliances;Stoves, cookers,barbecues, etc.
+7322;208;Thermal equipment;Radiators and air heaters
+7323;208;Household articles;Pots, pans, scouring pads, etc.
+7324;208;Sanitary ware;Iron and steel sinks and baths
+7325;208;Other cast articles;e.g. grinding balls 
+7326;208;Other articles n.e.i.;
+253090;301;Ores and concentrates;Bastnasite, monazite, xenotime , etc.
+280530;302;Metals, intermixtures and alloys;Scandium & yttrium metals
+284610;303;Cerium compounds;
+284690;303;Other rare earth compounds;
+8501;401;Electric machines;Motors and generators
+8502;401;Electric machines;Generating sets
+8503;401;Electric machines;Parts
+8504;402;Power conversion;Transformers and converters
+8535;402;Switching & protection;High-voltage apparatus
+8536;402;Switching & protection;Low-voltage apparatus
+8537;402;Boards and panels;
+8538;402;Electrical apparatus;
+8505;402; Electro magnets;
+8506;403;Primary batteries;Cells
+8507;403;Electric accumulators;
+8508;404;Household appliances;Vacuum cleaners
+8509;404;Household appliances;Electro mechanical
+8510;404;Personal care;Shavers and clippers
+8511;404;Automotive and machinery;Ignition equipment
+8512;404;Automotive and machinery;Lighting equipment
+8513;404;Lamps;
+8516;404;Electric water, space, soil heaters;
+8514;405;Electrothermal equipment;Industrial furnaces
+8515;405;Joining equipment;Welding machines
+8543;405;Electrical machines n.e.s.;
+8517;406;Communication equipment;Telephone, including smartphones 
+8525;406;Communication equipment;Broadcasting equipment
+8526;406;Communication equipment;Radar apparatus
+8527;406;Communication equipment;Radio receivers
+8518;407;Audio and video equipment;Audio equipment
+8519;407;Audio and video equipment;Recording equipment
+8521;407;Audio and video equipment;Video equipment
+8522;407;Audio and video equipment;Audio-video parts
+8523;408;Data storage;Recorded media
+8524;408;Display equipment;Flat panel displays
+8528;408;Display equipment;Monitors and projectors
+8529;408;Display equipment;Transmission apparatus
+8530;409;Traffic systems;Railway signalling
+8531;409;Alarm systems;Sound or visual signalling
+8532;410;Passive components;Capacitors
+8533;410;Passive components;Resistors
+8534;410;Electronic substrates;Printed circuits
+8540;410;Vacuum electronics;Thermionic valves
+8541;410;Semiconductor devices;
+8542;410;Microelectronics;Integrated circuits
+8544;411;Power transmission;Insulated wire and cable
+8545;411;Carbon components;Carbon electrodes
+8546;411;Electrical insulation;Insulators
+8547;411;Electrical insulation;Insulating fittings
+8548;412;Scrap;
+9001;501;Optical fibres;
+9002;501;Lenses and prisms;
+9013;501;Lasers;
+9003;502;Vision aids;Frames and mountings
+9004;502;Vision aids;Spectacles and goggles
+9005;502;Optical instruments;Binoculars and telescopes
+9006;503;Photography;Cameras
+9007;503;Cinematography;Cinematographic cameras
+9008;503;Projection systems;Image projectors
+9010;503;Photo processing;Laboratory apparatus and equipment
+9022;503;Medical imaging;Radiation apparatus
+9011;504;Microscopy;Compound microscopes
+9012;504;Microscopy;Other microscopes
+9016;504;Testing equipment;Balances
+9017;504;Testing equipment;Drawing, marking-out, mathematical calculating
+9023;504;Teaching equipment;Demonstration instruments
+9024;504;Testing equipment;Hardness, strength, elasticity testers
+9025;504;Testing equipment;Thermometers, hydrometers and others
+9026;504;Testing equipment;Flow and level instruments
+9027;504;Testing equipment;Physical analysis instruments
+9030;504;Testing equipment;Oscilloscopes and analyzers
+9031;504;Testing equipment;Measuring n.e.s.
+9014;505;Navigation;Navigational instruments
+9015;505;Surveying;hydrological, meteorological or geophysical instruments
+9028;505;Monitoring;Gas and electricity meters
+9029;505;Monitoring;Production counters and speed indicators
+9032;505;Control systems;Automatic regulators
+9018;506;Medical devices;Scintigraphic and other apparatus
+9019;506;Mechano-therapy;
+9020;506;Breathing appliances;
+9021;506;Orthopaedic appliances;
+9033;507;;
+3801;601;Artificial graphite;
+3802;601;Activated carbon;
+3803;602;Tall oil;
+3804;602;Residual lyes;
+3823;602;Industrial fatty acids;
+3805;603;Solvents;Gum and resin solvents
+3806;603;Resins;Rosin and resin acids
+3807;603;Wood tar;
+3814;603;Solvents;Organic solvents
+3808;604;Agrochemicals;
+3809;604;Textile auxiliaries;
+3810;604;Metal-pickling preparations;
+3811;604;Anti-knock preparations, oxidation, etc.;
+3812;604;Prepared rubber accelerators;
+3813;604;Fire extinguishing agents;
+3815;604;Catalysts;
+3816;604;Refractory binders;
+3817;604;Mixed alkylbenzenes;
+3818;604;Doped materials;
+3819;604;Hydraulic fluids;
+3820;604;Antifreeze;
+3821;604;Laboratory products for culture media;
+3822;604;Reagents;
+3824;604;Binders for foundry moulds or cores;
