@@ -38,46 +38,60 @@ Due to licensing and redistribution restrictions, **raw UN Comtrade data files a
 
 ## Dashboard Preview
 
-The Power BI data model is designed to be **sector-independent**. To enable a comprehensive analysis of each sector, three fact tables with different levels of granularity are used:
+The Power BI model is designed to be sector-independent, allowing the same analytical framework to be reused across different industries and product groupings. 
+
+Several interactive dashboards have been developed to explore international trade flows from complementary analytical perspectives. Each dashboard is built on a dedicated data structure and is optimized for a specific type of analysis, ranging from long-term structural patterns to short-term dynamics. Together, they provide a comprehensive view of trade specialization, regional integration, and temporal evolution within the selected sector.
 
 ### Export Structure
 
-This fact table focuses on analyzing the **productive specialization** of the main exporting countries within the sector. Its objectives are to:
+The Export Structure dashboard focuses on analyzing the **productive and export specialization** of the main exporting countries within the selected sector.
 
-- Define the categories that make up the analyzed sector and assess their relative importance, including subdivisions.
-- Analyze how the export structure has changed over time.
-- Examine the productive specialization of the leading exporting countries, including the relative share of the top *N* exporters and its evolution over time.
+Its main objectives are to:
+
+- Define the product categories that make up the analyzed sector, including internal subdivisions, and assess their relative importance.
+- Analyze how the export composition of the sector has evolved over time.
+- Examine the degree of export concentration by identifying the leading exporting countries, the relative share of the top *N* exporters, and how this concentration changes over time.
 
 ![Process Animation](trade-analysis/gifs/export_estructure.gif)
 
 
 ### Regional Analysis
 
-This fact table is intended to analyze **exports and imports** for a selected subgroup of countries. The focus is on regions rather than individual products, allowing the analysis of:
+The Regional Analysis dashboard is designed to examine **exports and imports** for a selected group of countries or regions. Instead of focusing on individual countries, the analysis emphasizes regional dynamics and integration patterns.
 
-- The HS subgroups in which the region records a trade surplus or deficit.
-- The relative importance of main trading partners, both in exports and imports.
-- The level of intra-industry trade within each subsector.
+Key analytical use cases include:
+
+- Identifying HS product groups in which the selected region records persistent trade surpluses or deficits.
+- Assessing the relative importance of main trading partners on both the export and import sides.
+- Measuring the degree of intra-industry trade within each subsector, providing insights into regional value chain integration.
 
 ![Process Animation](trade-analysis/gifs/regional_focus.gif)
 
 
 ### Monthly Data
 
-The monthly fact table allows for the analysis of **seasonality**, the effects of new trade policies, and recent trend changes in the analyzed sector. It also examines year-over-year changes in trade volume for the selected reference period, with variations broken down by product category a
+The Monthly Data dashboard enables higher-frequency analysis of trade flows, making it especially suitable for detecting **short-term dynamics** that are not visible in annual data.
+
+Its applications include:
+- Analyzing seasonal patterns in trade volumes.
+- Assessing the short-term impact of new trade policies, tariffs, or external shocks.
+- Identifying recent trend changes and potential turning points in the sector.
+- Comparing year-over-year changes for specific periods, broken down by HS product groups.
+- Supporting near-real-time monitoring of trade developments for policy or market analysis.
 
 ![Process Animation](trade-analysis/gifs/monthly_data.gif)
 
 ## Lookup Tables
 
+Various lookup tables are used in order to enrich, standardize, and structure the trade data model. These tables provide descriptive metadata, classification mappings, and analytical hierarchies that are intentionally separated from the main fact table to avoid redundancy and improve model efficiency.
+
 ### UN Comtrade Lookup Tables
 
-These lookup tables are downloaded directly from **UN Comtrade** and contain official reference data used to decode and enrich the raw trade records. 
+Some of the lookup tables are downloaded directly from **UN Comtrade** and contain official reference data used to decode the raw trade records. 
 
 
 | Lookup Table Name                 | Description                                                    |
 | --------------------------------- | -------------------------------------------------------------- |
-| **Calendar Lookup**         | Standardized calendar attributes for time-based analysis.            |
 | **Flow Lookup**                   | Standardized trade flow codes and labels.                      |
 | **Frequency Lookup**              | Reporting frequency codes and labels.                          |
 | **Quantity Lookup**               | Quantity unit codes and measurement definitions.               |
@@ -97,16 +111,21 @@ By modifying these custom lookup tables, users can tailor the analytical structu
 
 | Lookup Table Name           | Description                                                                                   |
 | --------------------------- | --------------------------------------------------------------------------------------------- |
+| **Calendar Lookup**         | Standardized calendar attributes for time-based analysis.                                     |
 | **Sector Lookup**           | Sector definitions for high-level product grouping.                                           |
 | **Category Lookup**         | Category definitions within each sector.                                                      |
 | **Product–Category Bridge** | Mapping HS product codes and category assignments and adding additional hierarchical attributes.|
 
 
-## Analysis Workflow
+## Analytical Setup and Data Workflow
 
-The first step in the analysis is to define the sector of analysis and the HS product instances that compose it. Once the sector has been defined, the custom lookup tables must be updated by establishing a logical hierarchy of categories, subcategories, and product forms, at the user’s discretion.
+### Defining the Analytical Scope
+The first step of the analysis is the definition of the sector under study. Once the relevant HS codes have been identified, the user must update the **custom lookup tables** to:
+- Associate each HS instance with a sector
+- Define a logical hierarchy of categories, subcategories, and product forms
+- Reflect the analytical structure required for the dashboards
 
-After defining the sector, the required datasets are downloaded to perform the analysis. All dashboards rely on UN Comtrade data; however, each dashboard operates at a different level of granularity. As a result, three separate fact tables must be generated.
+This approach provides full flexibility in how sectors are defined and analyzed, while keeping the underlying trade data unchanged.
 
 ### Data Processing Pipeline
 A set of custom Python scripts is used to transform raw UN Comtrade data into a standardized, reusable data model compatible with Power BI.
@@ -146,9 +165,11 @@ To achieve this, the script computes total exports aggregated across all countri
 To ensure methodological consistency, regional groupings that aggregate multiple countries (such as the European Union) must be excluded, as their inclusion would omit intra-regional trade flows and distort the results.
 
 
-### Downloading Instructions
+### Raw Data Download Instructions
 
-#### Export Structure Dashboard
+All dashboards rely on UN Comtrade data, but each requires a different data extraction strategy due to differences in granularity and analytical focus.
+
+#### Export Structure Fact Table
 ```
 Year
  └── Flow [Fixed: Exports]
@@ -159,13 +180,13 @@ Year
 
 To construct the **Export Structure** processed fact table:
 
-1. Download **yearly data** for the selected countries of analysis (for example, the top *N* exporters of the sector), selecting **“World”** in the *Partner* field and **“Exports”** in the *Flow* field. Due to tool limitations, it may be necessary to download multiple files. The reference file format is **JSON**.
+1. Download **yearly data** for the selected countries of analysis / reporters (for example, the top *N* exporters of the sector), selecting **“World”** in the *Partner* field and **“Exports”** in the *Flow* field. Due to tool limitations regarding the amount of sectors selected, it may be necessary to download multiple files. The reference file format is **JSON**.
 2. Download **yearly aggregated export data** for each HS product instance and year. To do so, select **“All”** in the *Reporter* field and **“Reporter”** in the *Aggregated by* field.
 3. Run the `add_other_countries` Python script to generate an **“Other Countries”** record based on the difference between world totals and the selected group of reporting countries. A processed JSON file is exported to the specified output folder.
 4. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.
 5. Import the resulting file into Power BI as the **Export Structure** fact table.
 
-### Regional Focus Dashboard
+#### Regional Focus Fact Table
 ```
 Year
  └── Flow 
@@ -174,11 +195,11 @@ Year
                 └── Partner [Fixed: All]
 ```
 
-1. Download **yearly data** for the selected countries of analysis, selecting **“All”** in the *Partner* field.
+1. Download **yearly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field.
 2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.
 3. Import the resulting file into Power BI as the **Regional Focus** fact table.
 
-### Monthly Data Dashboard
+### Monthly Data Fact Table
 ```
 Year
  └── Month
@@ -189,7 +210,7 @@ Year
 ```
 
 
-1. Download **monthly data** for the selected countries of analysis, selecting **“All”** in the *Partner* field. The reference file format is **JSON**.
+1. Download **monthly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field. The reference file format is **JSON**.
 2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.
 3. Import the resulting file into Power BI as the **Monthly Data** fact table.
 
