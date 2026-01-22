@@ -212,6 +212,11 @@ Year
 
 
 ## License & Data Usage Notice
-This project uses UN Comtrade data under its respective licensing terms.
-Raw and processed datasets are not redistributed in this repository.
-This repository is intended solely for demonstration and portfolio purposes, focusing on data modeling, transformation logic, and visualization design.
+UN Comtrade data is publicly available under its respective terms of use and licensing conditions as defined by the United Nations Statistics Division (UNSD). Users are responsible for complying with the official UN Comtrade data usage policies when accessing or using the data independently.
+
+To comply with these terms:
+
+- Raw datasets are not redistributed in this repository.
+- Processed datasets are not shared in this repository.
+
+This repository is intended for educational, demonstration, and portfolio purposes only.
