@@ -6,7 +6,7 @@ International trade has been an essential component of relations between countri
 
 In recent years, however, the international trade landscape has experienced significant changes driven by production reshoring, the creation of increasingly complex supply chains, the acceleration of digitalization and e-commerce, and a growing focus on environmental sustainability.
 
-From a trade policy perspective, the global landscape has been increasingly shaped by rising protectionism aimed at protecting emerging or strategic domestic industries, increasing tariff revenues, enhancing economic and national security against external dependencies, or responding to unfair practices such as dumping. Trade agreements, which were traditionally multilateral, are increasingly being replaced by bilateral agreements between major trade blocs (for example, the recent EU–Mercosur Agreement).
+From a trade policy perspective, the global landscape has been increasingly shaped by rising protectionism aimed at protecting emerging or strategic domestic industries, increasing tariff revenues, enhancing economic and national security against external dependencies, or responding to unfair practices such as dumping. Trade agreements, which were traditionally multilateral, are increasingly being replaced by bilateral agreements between major trade blocs.
 
 At the business level, trade analysis is also essential not only to anticipate the impact of tariff barriers and mitigate logistical risks before they directly affect operating costs, but also to identify windows of opportunity in a global landscape characterized by uncertainty and constant change.
 
