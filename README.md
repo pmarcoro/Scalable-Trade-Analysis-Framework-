@@ -86,8 +86,7 @@ Various lookup tables are used in order to enrich, standardize, and structure th
 
 ### UN Comtrade Lookup Tables
 
-Some of the lookup tables are downloaded directly from **UN Comtrade** and contain official reference data used to decode the raw trade records. 
-
+Some of the lookup tables are downloaded from **UN Comtrade** and contain official reference data used to decode the raw trade records. The tables provided in the project are modified versions of such tables that add instances and contain minor modifications (e.g. "Other countries" as possible partner).
 
 | Lookup Table Name                 | Description                                                    |
 | --------------------------------- | -------------------------------------------------------------- |
