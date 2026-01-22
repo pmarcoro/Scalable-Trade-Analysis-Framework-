@@ -32,7 +32,7 @@ The model follows a star schema and uses lookup tables to contextualize and filt
 
 ## Data Source
 
-This project is based on international trade data sourced from **UN Comtrade**, the United Nations’ official repository for global merchandise trade statistics. UN Comtrade is one of the most comprehensive and widely used sources of data on international trade flows, providing detailed information by reporting country, partner country, product classification, trade flow, and time period. It is commonly used in economic research, policy analysis, and trade monitoring.
+This project is based on international trade data sourced from [**UN Comtrade**](https://comtradeplus.un.org/), the United Nations’ official repository for global merchandise trade statistics. UN Comtrade is one of the most comprehensive and widely used sources of data on international trade flows, providing detailed information by reporting country, partner country, product classification, trade flow, and time period. It is commonly used in economic research, policy analysis, and trade monitoring.
 
 Due to licensing and redistribution restrictions, **raw UN Comtrade data files are not included in this repository**. Users interested in using the present framework can do so the analysis downloading the original data directly from the UN Comtrade platform, subject to its terms of use.
 
@@ -179,10 +179,10 @@ Year
 
 To construct the **Export Structure** processed fact table:
 
-1. Download **yearly data** for the selected countries of analysis / reporters (for example, the top *N* exporters of the sector), selecting **“World”** in the *Partner* field and **“Exports”** in the *Flow* field. Due to tool limitations regarding the amount of sectors selected, it may be necessary to download multiple files. The reference file format is **JSON**.
-2. Download **yearly aggregated export data** for each HS product instance and year. To do so, select **“All”** in the *Reporter* field and **“Reporter”** in the *Aggregated by* field.
-3. Run the `add_other_countries` Python script to generate an **“Other Countries”** record based on the difference between world totals and the selected group of reporting countries. A processed JSON file is exported to the specified output folder.
-4. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.
+1. Download **yearly data** for the selected countries of analysis / reporters (for example, the top *N* exporters of the sector), selecting **“World”** in the *Partner* field and **“Exports”** in the *Flow* field. Due to tool limitations regarding the amount of sectors selected, it may be necessary to download multiple files. Locate the JSON files in the data\raw\export structure folder and rename them including the word "detailed" for them to be detected by the script
+2. Download **yearly aggregated export data** for each HS product instance and year. To do so, select **“All”** in the *Reporter* field and **“Reporter”** in the *Aggregated by* field. Locate the JSON files in the `data/raw/export structure` folder and rename them including the word "world" for them to be detected by the script
+3. Run the `add_other_countries` Python script to generate an **“Other Countries”** record based on the difference between world totals and the selected group of reporting countries. A processed JSON file will be exported to `data\raw`.
+4. Run the `etl_all` Python script to transform the resultant file into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
 5. Import the resulting file into Power BI as the **Export Structure** fact table.
 
 #### Regional Focus Fact Table
@@ -194,9 +194,9 @@ Year
                 └── Partner [Fixed: All]
 ```
 
-1. Download **yearly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field.
-2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.
-3. Import the resulting file into Power BI as the **Regional Focus** fact table.
+1. Download **yearly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field. Locate the JSON file(s) in `data\raw`
+2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
+3. Import the resulting file into Power BI as the **Region Focus** fact table.
 
 ### Monthly Data Fact Table
 ```
@@ -209,8 +209,8 @@ Year
 ```
 
 
-1. Download **monthly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field. The reference file format is **JSON**.
-2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.
+1. Download **monthly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field. Locate the JSON file(s) in `data\raw`
+2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.  A Parquet file with the processed data will be created in the `data\processed` folder
 3. Import the resulting file into Power BI as the **Monthly Data** fact table.
 
 
