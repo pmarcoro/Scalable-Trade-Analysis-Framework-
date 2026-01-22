@@ -82,7 +82,7 @@ Its applications include:
 
 ## Lookup Tables
 
-Various lookup tables are used in order to enrich, standardize, and structure the trade data model. These tables provide descriptive metadata, classification mappings, and analytical hierarchies that are intentionally separated from the main fact table to avoid redundancy and improve model efficiency.
+Various lookup tables are used in order to enrich, standardize and structure the trade data model. These tables provide descriptive metadata, classification mappings, and analytical hierarchies that are separated from the main fact table to avoid redundancy and improve model efficiency.
 
 ### UN Comtrade Lookup Tables
 
