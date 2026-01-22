@@ -28,8 +28,6 @@ The project follows a two-layer architecture:
 
    2)  Processed data is analyzed using a Power BI model.
 
-The model follows a star schema and uses lookup tables to contextualize and filter fact data using a star-schema. 3 fact tables of different granularity allowing for flexible slicing and aggregation. 
-
 ## Data Source
 
 This project is based on international trade data sourced from [**UN Comtrade**](https://comtradeplus.un.org/), the United Nations’ official repository for global merchandise trade statistics. UN Comtrade is one of the most comprehensive and widely used sources of data on international trade flows, providing detailed information by reporting country, partner country, product classification, trade flow, and time period. It is commonly used in economic research, policy analysis, and trade monitoring.
@@ -82,7 +80,7 @@ Its applications include:
 
 ## Lookup Tables
 
-Various lookup tables are used in order to enrich, standardize and structure the trade data model. These tables provide descriptive metadata, classification mappings, and analytical hierarchies that are separated from the main fact table to avoid redundancy and improve model efficiency.
+The model uses various lookup tables to contextualize and filter fact data using a star-schema. These tables provide descriptive metadata, classification mappings, and analytical hierarchies that are separated from the main fact table to avoid redundancy and improve model efficiency.
 
 ### UN Comtrade Lookup Tables
 
