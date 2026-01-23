@@ -38,11 +38,11 @@ Due to licensing and redistribution restrictions, **raw UN Comtrade data files a
 
 The Power BI model is designed to be sector-independent, allowing the same analytical framework to be reused across different industries and product groupings. 
 
-Several interactive dashboards have been developed to explore international trade flows from complementary analytical perspectives. Each dashboard is built on a dedicated data structure and is optimized for a specific type of analysis, ranging from long-term structural patterns to short-term dynamics. Together, they provide a comprehensive view of trade specialization, regional integration, and temporal evolution within the selected sector.
+Several interactive report pages have been developed to explore international trade flows from complementary analytical perspectives. Each page is built on a dedicated data structure and is optimized for a specific type of analysis, ranging from long-term structural patterns to short-term dynamics. Together, they provide a comprehensive view of trade specialization, regional integration, and temporal evolution within the selected sector.
 
 ### Export Structure
 
-The Export Structure dashboard focuses on analyzing the **productive and export specialization** of the main exporting countries within the selected sector.
+The Export Structure page focuses on analyzing the **productive and export specialization** of the main exporting countries within the selected sector.
 
 Its main objectives are to:
 
@@ -54,7 +54,7 @@ Its main objectives are to:
 
 ### Regional Analysis
 
-The Regional Analysis dashboard is designed to examine **exports and imports** for a selected group of countries or regions. Instead of focusing on individual countries, the analysis emphasizes regional dynamics and integration patterns.
+The Regional Analysis page is designed to examine **exports and imports** for a selected group of countries or regions. Instead of focusing on individual countries, the analysis emphasizes regional dynamics and integration patterns.
 
 Key analytical use cases include:
 
@@ -67,7 +67,7 @@ Key analytical use cases include:
 
 ### Monthly Data
 
-The Monthly Data dashboard enables higher-frequency analysis of trade flows, making it especially suitable for detecting **short-term dynamics** that are not visible in annual data.
+The Monthly Data page enables higher-frequency analysis of trade flows, making it especially suitable for detecting **short-term dynamics** that are not visible in annual data.
 
 Its applications include:
 - Analyzing seasonal patterns in trade volumes.
@@ -119,7 +119,7 @@ By modifying these custom lookup tables, users can tailor the analytical structu
 The first step of the analysis is the definition of the sector under study. Once the relevant HS codes have been identified, the user must update the **custom lookup tables** to:
 - Associate each HS instance with a sector
 - Define a logical hierarchy of categories, subcategories, and product forms
-- Reflect the analytical structure required for the dashboards
+- Reflect the analytical structure required for the report
 
 This approach provides full flexibility in how sectors are defined and analyzed, while keeping the underlying trade data unchanged.
 
@@ -154,7 +154,7 @@ After processing, the dataset retains the following standardized columns:
 This standardized structure is common for each of the 3 fact tables used in the model.
 
 #### 2. `add_other_countries`
-This script is used to support the Export Structure dashboard. Its purpose is to analyze the extent to which total exports are concentrated within a limited set of countries and to improve visual clarity by introducing an aggregated “Other countries” category.
+This script is used to support the Export Structure page. Its purpose is to analyze the extent to which total exports are concentrated within a limited set of countries and to improve visual clarity by introducing an aggregated “Other countries” category.
 
 To achieve this, the script computes total exports aggregated across all countries by year, HS classification, and trade flow (exports and imports). These totals are then compared against the aggregated value of the selected regional group. The difference between the global aggregate and the selected region constitutes the “Other countries” category.
 
@@ -163,7 +163,7 @@ To ensure methodological consistency, regional groupings that aggregate multiple
 
 ### Raw Data Download Instructions
 
-All dashboards rely on UN Comtrade data, but each requires a different data extraction strategy due to differences in granularity and analytical focus.
+All report pages rely on UN Comtrade data, but each requires a different data extraction strategy due to differences in granularity and analytical focus.
 
 #### Export Structure Fact Table
 ```
