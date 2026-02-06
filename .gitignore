@@ -1,0 +1,16 @@
+# Folders
+.vscode/
+scripts - viejos/
+
+# Python
+__pycache__/
+venv/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+
+# OS files
+Thumbs.db
+

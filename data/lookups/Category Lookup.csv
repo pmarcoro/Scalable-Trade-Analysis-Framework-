@@ -1,0 +1,41 @@
+Sector id;Category id;Category Name
+1;101;Pig Iron
+1;102;Ferrous
+1;103;Powders
+1;104;Iron or non-alloy steel
+1;105;Stainless steel
+1;106;Alloy steel
+2;201;Structural
+2;202;Pipes and tubes
+2;203;Containers
+2;204;Wires
+2;205;Chains
+2;206;Anchoring systems
+2;207;Fasteners and springs
+2;208;Consumer & utility goods
+3;301;Rare earth minerals
+3;302;Rare earth metals
+3;303;Rare earth compounds
+4;401;Electric machines
+4;402;Power and control equipment
+4;403;Batteries
+4;404;Electrical appliances
+4;405;Industrial electrical equipment
+4;406;Telecomunications
+4;407;Signalling systems
+4;408;Electronic components
+4;409;Cables and insulation
+4;410;Electronic components
+4;411;Cables and insulation
+4;412;Waste and scrap
+5;501;Optical materials
+5;502;Optical devices
+5;503;Imaging equipment
+5;504;Scientific and measuring
+5;505;Navigation and control
+5;506;Medical devices
+5;507;Other machines and instruments
+6;601;Carbon products
+6;602;Chemical by-products
+6;603;Solvents and resins
+6;604;Prepared chemicals
