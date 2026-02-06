@@ -44,45 +44,57 @@ Several interactive report pages have been developed to explore international tr
 
 The Export Structure page focuses on analyzing the **productive and export specialization** of the main exporting countries within the selected sector.
 
-Its main objectives are to:
+Objectives:
 
 - Define the product categories that make up the analyzed sector, including internal subdivisions, and assess their relative importance.
 - Analyze how the export composition of the sector has evolved over time.
 - Examine the degree of export concentration by identifying the leading exporting countries, the relative share of the top *N* exporters, and how this concentration changes over time.
 
-<img src="gifs/Export%20Estructure%20preview.gif" width="600">
+<p align="center">
+<img src="/images/gifs/Export%20Estructure%20preview.gif" width="900">
+</p>
 
 ### Regional Analysis
 
 The Regional Analysis page is designed to examine **exports and imports** for a selected group of countries or regions. The aim is to emphasizes the analysis of regional dynamics and integration patterns.
 
-Key analytical use cases include:
+Objectives:
 
 - Identifying HS product groups in which the selected region records persistent trade surpluses or deficits.
 - Assessing the relative importance of main trading partners on both the export and import sides.
 - Measuring the degree of intra-industry trade within each commodity group, providing insights into regional value chain integration.
 
-<img src="gifs/Region%20Focus%20preview.gif" width="600">
-
+<p align="center">
+<img src="/images/gifs/Region%20Focus%20preview.gif" width="900">
+</p>
 
 ### Monthly Data
 
 The Monthly Data page enables higher-frequency analysis of trade flows, making it especially suitable for detecting **short-term dynamics** that are not visible in annual data.
 
-Its applications include:
+Objectives:
+
 - Analyzing seasonal patterns in trade volumes.
 - Assessing the short-term impact of new trade policies, tariffs, or external shocks.
 - Identifying recent trend changes and potential turning points in the sector.
 - Comparing year-over-year changes for specific periods, broken down by HS commodity groups.
 - Supporting near-real-time monitoring of trade developments for policy or market analysis.
 
-<img src="gifs/Monthly%20data%20preview.gif" width="600">
+<p align="center">
+<img src="/images/gifs/Monthly%20data%20preview.gif" width="900">
+</p>
 
-## Lookup Tables
+## Data Model
+
+### Schema Overview
+
+### Fact Tables
+
+### Lookup Tables
 
 The model uses various lookup tables to contextualize and filter fact data using a star-schema. These tables provide descriptive metadata, classification mappings and analytical hierarchies that are separated from the main fact table to avoid redundancy and improve model efficiency.
 
-### UN Comtrade Lookup Tables
+#### UN Comtrade Lookup Tables
 
 Some of the lookup tables are downloaded from **UN Comtrade** and contain official reference data used to decode the raw trade records. The tables provided in the project are modified versions of such tables that add instances and contain minor modifications (e.g. "Other countries" as possible reporter).
 
@@ -96,7 +108,7 @@ Some of the lookup tables are downloaded from **UN Comtrade** and contain offici
 | **Product Lookup [Full HS 2022]** | HS 2022 product codes and official descriptions.               |
 
 
-### Custom Lookup Tables
+#### Custom Lookup Tables
 
 In addition to the official lookups, the project includes **custom lookup tables** that must be maintained and adapted by the user. These tables are designed to:
 - Link analytical **sectors** to specific HS product codes or HS instances
@@ -112,6 +124,7 @@ By modifying these custom lookup tables, users can tailor the analytical structu
 | **Category Lookup**         | Category definitions within each sector.                                                      |
 | **Product–Category Bridge** | Mapping HS product codes and category assignments and adding additional hierarchical attributes.|
 
+### Measures
 
 ## Analytical Setup and Data Workflow
 
@@ -128,8 +141,8 @@ A set of custom Python scripts is used to transform raw UN Comtrade data into a 
 
 Because UN Comtrade CSV files frequently present encoding and parsing issues, JSON is adopted as the default raw data format. The data processing pipeline is implemented through two Python scripts:
 
-#### 1. `etl_all`
-This script ingests the raw JSON files, standardizes and renames columns according to the target data schema, and consolidates multiple source files into a single unified dataset. The processed data is then exported to Parquet format, enabling more efficient storage and compression.
+#### 1. `etl`
+This script ingests the raw JSON files, renames columns according to the target data schema and consolidates multiple source files into a single unified dataset. The processed data is then exported to Parquet format, enabling more efficient storage and compression.
 
 After processing, the dataset retains the following standardized columns:
 
@@ -138,11 +151,10 @@ After processing, the dataset retains the following standardized columns:
 | `freqCode`         | Frequency of the data (e.g. annual, monthly) |
 | `year`             | Calendar year of the observation |
 | `period`           | Reporting period within the year with MMYYYY format |
-| `hs4`              | HS product classification |
+| `hs4`              | Harmonized System (HS) product code |
 | `reporterCode`     | Numeric code identifying the reporting country or economy |
 | `flowCode`         | Trade flow indicator (e.g. exports or imports) |
 | `partnerCode`      | Numeric code identifying the partner country or region |
-| `hs_code`          | Harmonized System (HS) product code |
 | `aggrLevel`        | Level of product aggregation in the HS classification |
 | `qtyUnitCode`      | Unit of measurement for reported quantities |
 | `qty`              | Reported trade quantity |
@@ -175,13 +187,13 @@ Year
 
 To construct the **Export Structure** processed fact table:
 
-1. Download **yearly data** for the selected countries of analysis / reporters (for example, the top *N* exporters of the sector in a given period), selecting **“World”** in the *Partner* field,  **“Exports”** in the *Flow* field and the year(s) of reference desired. Due to tool limitations the number of HS commodity groups is limited to 10 per download for free users, so it may be necessary to download multiple files. Locate the JSON files in the data\raw\export structure folder and rename them including the word "detailed" for them to be correctly classified by the Python script.
-2. Download **yearly aggregated export data** for each HS product instance and year. To do so, select **“All”** in the *Reporter* field and **“Reporter”** in the *Aggregated by* field. Locate the JSON files in the `data/raw/export structure` folder and rename them including the word "world" for them to be detected by the script
+1. Download **yearly data** for the selected countries of analysis / reporters (for example, the top *N* exporters of the sector in a given period), selecting **“World”** in the *Partner* field and **“Exports”** in the *Flow* field. Due to tool limitations, the number of HS commodity entries is limited to 10 per download for free users, so it may be necessary to download multiple files. Locate the JSON file(s) in the data\raw\export structure folder and rename them including the word "detailed" for them to be correctly classified by the Python script.
+2. Download **yearly aggregated export data** for each HS product instance and year. To do so, select **“All”** in the *Reporter* field and **“Reporter”** in the *Aggregated by* field. Locate the JSON files in the `data/raw/export structure` folder and rename them including the word "world" for them to be detected by the Python script.
 3. Run the `add_other_countries` Python script to generate an **“Other Countries”** record based on the difference between world totals and the selected group of reporting countries. A processed JSON file will be exported to `data\raw`.
-4. Run the `etl_all` Python script to transform the resultant file into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
+4. Run the `etl` Python script to transform the resultant file into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
 5. Import the resulting file into Power BI as the **Export Structure** fact table.
 
-* The top N countries by value of the selected sector can be identified selecting: All the HS codes identifying the sector (or its parent code if possible) , "All" in the *Reporter* field, **“World”** in the *Partner* field and **“Exports”** in the *Flow* field, then ordering by value in the "preview". 
+* The top N countries by value of the selected sector in a given year can be identified selecting all the HS codes identifying the sector, "All" in the *Reporter* field, **“World”** in the *Partner* field and **“Exports”** in the *Flow* field, then ordering by value in the "preview". 
 
 #### Regional Focus Fact Table
 ```
@@ -192,8 +204,8 @@ Year
                 └── Partner [Fixed: All]
 ```
 
-1. Download **yearly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field and the year(s) of reference desired. Locate the JSON file(s) in `data\raw`
-2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
+1. Download **yearly data** for the desired countries of analysis (reporters), selecting **“All”** in the *Partner* field. Repeat the process for the required HS entries, downloading various files if necessary. Download the file(s) in JSON format and locate them in `data\raw`.
+2. Run the `etl` Python script to transform the file(s) into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
 3. Import the resulting file into Power BI as the **Region Focus** fact table.
 
 ### Monthly Data Fact Table
@@ -207,8 +219,8 @@ Year
 ```
 
 
-1. Download **monthly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field. Locate the JSON file(s) in `data\raw`
-2. Run the `etl_all` Python script to transform the file(s) into a format suitable for Power BI consumption.  A Parquet file with the processed data will be created in the `data\processed` folder
+1. Download **monthly data** for the selected countries of analysis (reporters), selecting **“All”** in the *Partner* field and the month(s) of reference desired. Locate the JSON file(s) in `data\raw`
+2. Run the `etl` Python script to transform the file(s) into a format suitable for Power BI consumption.  A Parquet file with the processed data will be created in the `data\processed` folder
 3. Import the resulting file into Power BI as the **Monthly Data** fact table.
 
 
