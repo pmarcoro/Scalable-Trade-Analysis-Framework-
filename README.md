@@ -40,7 +40,9 @@ The Power BI model is designed to be sector-independent, allowing the same analy
 
 Several interactive report pages have been developed to explore international trade flows from complementary analytical perspectives. Each page is built on a dedicated data structure and is optimized for a specific type of analysis, ranging from long-term structural patterns to short-term dynamics. Together, they provide a comprehensive view of trade specialization, regional integration, and temporal evolution within the selected sector.
 
-### Export Structure
+---
+
+### Export Structure Page
 
 The Export Structure page focuses on analyzing the **productive and export specialization** of the main exporting countries within the selected sector.
 
@@ -50,11 +52,20 @@ Objectives:
 - Analyze how the export composition of the sector has evolved over time.
 - Examine the degree of export concentration by identifying the leading exporting countries, the relative share of the top *N* exporters, and how this concentration changes over time.
 
+
+
+
+<p align="center">
+Export Structure Page Preview
+</p>
+
 <p align="center">
 <img src="/images/gifs/Export%20Estructure%20preview.gif" width="900">
 </p>
 
-### Regional Analysis
+---
+
+### Regional Analysis Page
 
 The Regional Analysis page is designed to examine **exports and imports** for a selected group of countries or regions. The aim is to emphasizes the analysis of regional dynamics and integration patterns.
 
@@ -64,11 +75,19 @@ Objectives:
 - Assessing the relative importance of main trading partners on both the export and import sides.
 - Measuring the degree of intra-industry trade within each commodity group, providing insights into regional value chain integration.
 
+  
+
+<p align="center">
+Regional Analysis Page Preview
+</p>
+
 <p align="center">
 <img src="/images/gifs/Region%20Focus%20preview.gif" width="900">
 </p>
 
-### Monthly Data
+---
+
+### Monthly Data Page
 
 The Monthly Data page enables higher-frequency analysis of trade flows, making it especially suitable for detecting **short-term dynamics** that are not visible in annual data.
 
@@ -80,23 +99,102 @@ Objectives:
 - Comparing year-over-year changes for specific periods, broken down by HS commodity groups.
 - Supporting near-real-time monitoring of trade developments for policy or market analysis.
 
+
 <p align="center">
+Monthly Data Page Preview
+</p>
+
+<p align="center">   
 <img src="/images/gifs/Monthly%20data%20preview.gif" width="900">
 </p>
+
+## Data Processing Approach
+
+The project follows a simplified Medallion Architecture (Bronze–Silver–Gold) logic to structure the data transformation workflow.
+
+### Bronze Layer — Raw UN Comtrade Data
+The raw JSON files downloaded from UN Comtrade represent the Bronze layer of the project. These files contain:
+
+ - Transactional trade values
+ - Reporter and partner identifiers 
+ - Commodity classifications
+ - Flow information
+ - Metadata and auxiliary reference fields
+
+### Silver Layer — Processed Analytical Dataset
+Using custom Python scripts (etl.py, add_other_countries.py) the raw JSON files are transformed into a structured fact tables, suitable for analytical modeling.The transformation process includes:
+
+- Selecting only columns relevant for analytical purposes
+- Removing metadata fields not required for modeling
+- Excluding descriptive fields that are later linked through dedicated lookup tables (to avoid redundancy and ensure normalization)
+- Standardizing and renaming selected columns for clarity and consistency
+
+### Gold Layer — Power BI model
+The Gold layer corresponds to the Power BI data model, where:
+
+ - Fact tables are connected to normalized lookup tables
+ - Relationships are defined
+ - Measures (DAX) are implemented
+ - Business logic is applied
+
 
 ## Data Model
 
 ### Schema Overview
+The data model is organized as a Star Schema, with a central set of fact tables connected to multiple lookup (dimension) tables. Each fact table represents a specific analytical layer (Export Structure, Regional Focus, Monthly Data) and links to the relevant dimensions such as Reporter, Partner, HS Code, Flow, and Time.
+
+Below is a visual overview of the schema.
+
+<p align="center">
+<img src="/images/schema_overview.png" width="900">
+</p>
+
 
 ### Fact Tables
+The analytical model is structured around three core fact tables, each designed to support a specific report page and analytical perspective. Although all tables originate from UN Comtrade data, they differ in granularity, aggregation logic, and methodological treatment.
+
+
+Fact Tables Overview
+
+| Fact Table       | Time Granularity | Product Level | Reporter Scope     | Partner Scope | Flow Scope      |
+| ---------------- | ---------------- | ------------- | ------------------ | ------------- | --------------- |
+| Export Structure | Yearly           | HS Code       | Selected + “Other” | World         | EXP             |
+| Regional Focus   | Yearly           | HS Code       | Selected           | All           | EXP & IMP       |
+| Monthly Data     | Monthly          | HS Code       | Selected           | All           | EXP & IMP       |
+
+
+
+After processing, the dataset retains the following standardized columns. The structure is common for the three fact tables.
+
+Fact Table structure (Silver Layer)
+
+| Column name         | Description |
+|--------------------|-------------|
+| `freqCode`         | Frequency of the data (e.g. annual, monthly) |
+| `year`             | Calendar year of the observation |
+| `period`           | Reporting period within the year with MMYYYY format |
+| `hs4`              | Harmonized System (HS) product code |
+| `reporterCode`     | Numeric code identifying the reporting country or economy |
+| `flowCode`         | Trade flow indicator (e.g. exports or imports) |
+| `partnerCode`      | Numeric code identifying the partner country or region |
+| `aggrLevel`        | Level of product aggregation in the HS classification |
+| `qtyUnitCode`      | Unit of measurement for reported quantities |
+| `qty`              | Reported trade quantity |
+| `cifvalue`         | Trade value on a CIF (Cost, Insurance, and Freight) basis |
+| `fobvalue`         | Trade value on a FOB (Free On Board) basis |
+| `trade_value_usd`  | Standardized trade value expressed in US dollars |
+| `isAggregate`      | Boolean flag indicating whether the record corresponds to an aggregate (e.g. regional or global total) |
+
 
 ### Lookup Tables
 
-The model uses various lookup tables to contextualize and filter fact data using a star-schema. These tables provide descriptive metadata, classification mappings and analytical hierarchies that are separated from the main fact table to avoid redundancy and improve model efficiency.
+The model uses various lookup tables to contextualize and filter the fact tables. These tables provide descriptive metadata, classification mappings and analytical hierarchies that are separated from the main fact table to avoid redundancy and improve model efficiency.
 
 #### UN Comtrade Lookup Tables
 
 Some of the lookup tables are downloaded from **UN Comtrade** and contain official reference data used to decode the raw trade records. The tables provided in the project are modified versions of such tables that add instances and contain minor modifications (e.g. "Other countries" as possible reporter).
+
+UN Comtrade Lookup Tables Overview
 
 | Lookup Table Name                 | Description                                                    |
 | --------------------------------- | -------------------------------------------------------------- |
@@ -117,6 +215,8 @@ In addition to the official lookups, the project includes **custom lookup tables
 
 By modifying these custom lookup tables, users can tailor the analytical structure to their specific use case.
 
+Custom Lookup Tables Overview
+
 | Lookup Table Name           | Description                                                                                   |
 | --------------------------- | --------------------------------------------------------------------------------------------- |
 | **Calendar Lookup**         | Standardized calendar attributes for time-based analysis.                                     |
@@ -125,6 +225,14 @@ By modifying these custom lookup tables, users can tailor the analytical structu
 | **Product–Category Bridge** | Mapping HS product codes and category assignments and adding additional hierarchical attributes.|
 
 ### Measures
+The analytical model leverages a set of DAX measures to perform key calculations and aggregations across the fact tables. These measures include totals, averages, and ratios that support the reporting requirements of each dashboard page.
+
+Below is a visual overview of the measures implemented in the model.
+
+<p align="center">
+<img src="/images/measures/Measures%20image.png" width="900">
+</p>
+
 
 ## Analytical Setup and Data Workflow
 
@@ -142,28 +250,7 @@ A set of custom Python scripts is used to transform raw UN Comtrade data into a 
 Because UN Comtrade CSV files frequently present encoding and parsing issues, JSON is adopted as the default raw data format. The data processing pipeline is implemented through two Python scripts:
 
 #### 1. `etl`
-This script ingests the raw JSON files, renames columns according to the target data schema and consolidates multiple source files into a single unified dataset. The processed data is then exported to Parquet format, enabling more efficient storage and compression.
-
-After processing, the dataset retains the following standardized columns:
-
-| Column name         | Description |
-|--------------------|-------------|
-| `freqCode`         | Frequency of the data (e.g. annual, monthly) |
-| `year`             | Calendar year of the observation |
-| `period`           | Reporting period within the year with MMYYYY format |
-| `hs4`              | Harmonized System (HS) product code |
-| `reporterCode`     | Numeric code identifying the reporting country or economy |
-| `flowCode`         | Trade flow indicator (e.g. exports or imports) |
-| `partnerCode`      | Numeric code identifying the partner country or region |
-| `aggrLevel`        | Level of product aggregation in the HS classification |
-| `qtyUnitCode`      | Unit of measurement for reported quantities |
-| `qty`              | Reported trade quantity |
-| `cifvalue`         | Trade value on a CIF (Cost, Insurance, and Freight) basis |
-| `fobvalue`         | Trade value on a FOB (Free On Board) basis |
-| `trade_value_usd`  | Standardized trade value expressed in US dollars |
-| `isAggregate`      | Boolean flag indicating whether the record corresponds to an aggregate (e.g. regional or global total) |
-
-This standardized structure is common for each of the 3 fact tables used in the model.
+This script ingests the raw JSON files, renames columns according to the target data schema and consolidates multiple source files into a single unified dataset. The processed data is then exported to Parquet format, enabling more efficient storage and compression. The standardized structure is common for each of the 3 fact tables used in the model.
 
 #### 2. `add_other_countries`
 This script is used to support the Export Structure page. Its purpose is to analyze the extent to which total exports are concentrated within a limited set of countries and to improve visual clarity by introducing an aggregated “Other countries” reporter category.
@@ -208,7 +295,7 @@ Year
 2. Run the `etl` Python script to transform the file(s) into a format suitable for Power BI consumption. A Parquet file with the processed data will be created in the `data\processed` folder
 3. Import the resulting file into Power BI as the **Region Focus** fact table.
 
-### Monthly Data Fact Table
+#### Monthly Data Fact Table
 ```
 Year
  └── Month
